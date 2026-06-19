@@ -3,19 +3,22 @@ package com.agartha.didik.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.agartha.didik.databinding.ItemCompanyBinding
+import com.agartha.didik.databinding.ItemCompanyCardBinding
 import com.agartha.didik.ui.review.ReviewModel
-import java.util.Locale
 
-class CompanyAdapter(
+class CompanyCardAdapter(
     private val listCompany: List<ReviewModel>,
     private val onItemClick: (ReviewModel) -> Unit
-) : RecyclerView.Adapter<CompanyAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<CompanyCardAdapter.ViewHolder>() {
 
-    class ViewHolder(val binding: ItemCompanyBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ItemCompanyCardBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemCompanyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemCompanyCardBinding.inflate(
+            LayoutInflater.from(parent.context), 
+            parent, 
+            false
+        )
         return ViewHolder(binding)
     }
 
@@ -24,12 +27,10 @@ class CompanyAdapter(
         with(holder.binding) {
             tvTitle.text = item.position
             tvCompany.text = "${item.companyName} - ${item.location}"
-            tvRating.text = String.format(Locale.getDefault(), "★ %.1f", item.rating)
-            tvDescription.text = item.jobDesc
+            tvTag1.text = item.category
+            // Tag 2 bisa diisi dengan info lain, misal tipe kerja
+            tvTag2.text = "Full Time" 
             
-            // tvTime sementara di-hardcode karena ReviewModel belum memiliki field waktu/tanggal
-            tvTime.text = "Baru saja"
-
             root.setOnClickListener {
                 onItemClick(item)
             }
